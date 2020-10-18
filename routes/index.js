@@ -4,7 +4,6 @@ const getAudioBitrate = require("../lib/youtubeFormatList");
 
 router.get("/", (req, res) => {
   res.sendFile(resolve("./views/index.html"));
-  console.log("receive");
 });
 
 router.get("/view", async (req, res) => {
@@ -13,7 +12,8 @@ router.get("/view", async (req, res) => {
   if (!id) {
     res.send(`
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <h1>존재하지않는 페이지입니다.`);
+    <h1>올바른 링크가 아닙니다</h1>`);
+    return;
   }
   const bitrate = await getAudioBitrate(id);
   res.render("../views/view.ejs", { bitrate, id });
